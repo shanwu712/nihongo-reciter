@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"></meta>
+        <title>背日文單字app</title>
+        <link rel="stylesheet" href="vocTesting.css"/>  
+    </head>
+    <body>
+        <h1>日文單字考試 <button id="back">回到單字表</button></h1>
+        <div id="finish"></div>
+        <div class="table-container">
+            <table id="testingTable">
+                <tr>
+                    <th></th>
+                    <td class="header-cell">単語</td>
+                    <td class="header-cell">読み仮名</td>
+                    <td class="header-cell">意味</td>
+                </tr>
+            </table>
+        </div>
+        <button type="submit" id="submit">交考卷</button>
+        <table id="correcting">
+        </table>
+        <script src="vocTesting.js"></script>
+    </body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"></meta>
+        <title>背日文單字app</title>
+        <link rel="stylesheet" href="vocReciter.css"/>  
+    </head>
+    <body>
+        <h1 id="header">日文單字考試生成
+            <button type="button" id="start">開始考試</button>
+        </h1>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>請選擇考題數目</p>
+                <form id="optionsForm">
+                    <label>
+                        <input type="radio" name="options" value="5">
+                        5題
+                    </label><br>
+                    <label>
+                        <input type="radio" name="options" value="10">
+                        10題
+                    </label><br>
+                    <label>
+                        <input type="radio" name="options" value="15">
+                        15題
+                    </label><br><br>
+                    <button id="confirm" type="button">確認</button>
+                </form>
+            </div>
+        </div>
+        <div>
+            <label for="voc">単語</label>
+            <input id="voc" type="text" placeholder="読む">
+        </div>   
+        <div>
+            <label for="spelling">読み仮名</label>
+            <input id="spelling" type="text" placeholder="よむ">
+        </div>
+        <div>
+            <label for="meaning">意味</label>
+            <input id="meaning" type="text" placeholder="讀">
+        </div>
+        <br>  
+        <button type="submit" id="submit">送出</button> 
+        <button id="editTheList">編輯單字表</button>
+        <hr>
+        <table id="list">
+            <tr>
+                <td>単語</td>
+                <td>読み仮名</td>
+                <td>意味</td>
+            </tr>
+        </table>
+        <script src="vocReciter.js"></script>
+    </body>
+</html>
