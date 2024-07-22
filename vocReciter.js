@@ -25,7 +25,12 @@ yomiganaContainer.addEventListener("keypress",function(event) {
 meaningContainer.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
         meaningContainer.blur();
-        checkIfInputOk();
+        if (!isEditingMode) {
+            checkIfInputOk();
+        }else if (isEditingMode) {
+            alert("請先完成編輯！");
+            editBtn.addEventListener("click", () => {meaningContainer.focus();});
+        }  
     }
 });
 
@@ -83,6 +88,21 @@ const saveTable = () => {
     localStorage.setItem("tableData", JSON.stringify(tableData));
 };
 
+
+function showAddedOrDeletedAlert(message, duration) {
+    const addedOrDeletedAlert = document.getElementById("addedOrDeletedAlert");
+    addedOrDeletedAlert.textContent = message;
+    addedOrDeletedAlert.style.opacity = 0.8;
+    addedOrDeletedAlert.style.display = 'block';
+
+    setTimeout(() => {
+        addedOrDeletedAlert.style.opacity = 0;
+        setTimeout(() => {
+            addedOrDeletedAlert.style.display = 'none';
+        }, 500);
+    }, duration);
+}
+
 const addRow = (voc, yomigana, meaning) => {
     const newRow = list.insertRow();
     newRow.className = "aRowOfList";
@@ -91,24 +111,16 @@ const addRow = (voc, yomigana, meaning) => {
         <td>${yomigana}</td>
         <td>${meaning}</td>
     `;
-    if (isEditingMode) {
-        let cell = newRow.insertCell(-1);
-        cell.classList.add("deleteCell");
-        cell.innerHTML = '<button class="deleteBtn">刪除</button>';
-        const deleteBtn = cell.querySelector(".deleteBtn");
-        deleteBtn.addEventListener("click", () => {
-            newRow.remove();
-            saveTable();
-        });
-    }
+    showAddedOrDeletedAlert(`已成功新增 “${voc}” 到單字表！`, 1500);
 };
 
+
 const checkIfInputOk = () => {
-    if (!vocContainer.value && !meaningContainer.value) {
+    if (!vocContainer.value.trim() && !meaningContainer.value.trim()) {
         alert("請輸入日文單字及意思！");
-    } else if (!meaningContainer.value) {
+    } else if (!meaningContainer.value.trim()) {
         alert("請輸入意思！");
-    } else if (!vocContainer.value) {
+    } else if (!vocContainer.value.trim()) {
         alert("請輸入日文單字！");
     } else {
         rowCount++;
@@ -117,6 +129,7 @@ const checkIfInputOk = () => {
         vocContainer.value = "";
         yomiganaContainer.value = "";
         meaningContainer.value = "";
+        vocContainer.focus();
     }
 };
 
@@ -132,8 +145,16 @@ const toggleEditMode = () => {
                 cell.innerHTML = '<button class="deleteBtn">刪除</button>';
                 const deleteBtn = cell.querySelector(".deleteBtn");
                 deleteBtn.addEventListener("click", () => {
-                    row.remove();
-                    saveTable();
+                    const voc = row.cells[0].textContent;
+                    let doubleCheck = () => {
+                        let ans = confirm(`確定要刪除 “${voc}” 嗎？`);
+                        if (ans) {
+                            row.remove();
+                            saveTable();
+                            showAddedOrDeletedAlert(`已從單字表刪除 “${voc}” !`, 1500);
+                        }else {return}
+                    }
+                    doubleCheck();
                 });
             }
         });
@@ -160,5 +181,13 @@ const toggleEditMode = () => {
 };
 
 editBtn.addEventListener("click", toggleEditMode);
-window.onload = loadTable;
+window.onload = () => {
+    loadTable();
+
+    const addedOrDeletedAlert = document.getElementById("addedOrDeletedAlert");
+    addedOrDeletedAlert.style.display = 'none'; 
+    addedOrDeletedAlert.textContent = '';
+    addedOrDeletedAlert.style.opacity = 0; 
+};
+
 

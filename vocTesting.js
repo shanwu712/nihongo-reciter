@@ -115,6 +115,9 @@ function changingFocus (numOfQ) {
                     } else if (meaningInput) {
                         meaningInput.focus();
                     }
+                    else {
+                        document.getElementById(`vocInput${i + 1}`).focus();
+                    }
                 }, 100);
             }
         });
