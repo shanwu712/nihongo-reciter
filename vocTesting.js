@@ -214,20 +214,21 @@ function checkAnswer() {
     let meaningInput = document.getElementById(`meaningInput${i}`);
 
     if (vocInput) {
-      let tOrF = vocInput.value === tableData[randomIndices[i - 1]].voc;
+      let tOrF = vocInput.value.trim() === tableData[randomIndices[i - 1]].voc;
       checkedVoc.push(tOrF);
     } else {
       checkedVoc.push(null);
     }
     if (yomiganaInput) {
       let tOrF =
-        yomiganaInput.value === tableData[randomIndices[i - 1]].yomigana;
+        yomiganaInput.value.trim() === tableData[randomIndices[i - 1]].yomigana;
       checkedYomigana.push(tOrF);
     } else {
       checkedYomigana.push(null);
     }
     if (meaningInput) {
-      let tOrF = meaningInput.value === tableData[randomIndices[i - 1]].meaning;
+      let tOrF =
+        meaningInput.value.trim() === tableData[randomIndices[i - 1]].meaning;
       checkedMeaning.push(tOrF);
     } else {
       checkedMeaning.push(null);
